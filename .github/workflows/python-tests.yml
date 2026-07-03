@@ -22,8 +22,11 @@ jobs:
       - name: Format check (ruff)
         run: python -m ruff format --check src tests
 
-      - name: Type check (mypy)
-        run: python -m mypy src
+      - name: Format check (black)
+        run: python -m black --check src tests
 
-      - name: Tests (pytest)
+      - name: Type check (mypy --strict)
+        run: python -m mypy --strict src
+
+      - name: Tests (pytest + coverage)
         run: python -m pytest -v

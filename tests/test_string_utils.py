@@ -41,6 +41,12 @@ def test_truncate_cuts_and_appends_suffix():
     assert truncate("hello world", 8) == "hello..."
 
 
+def test_truncate_max_length_shorter_than_suffix():
+    # When max_length <= len(suffix), only the (clipped) suffix is returned.
+    assert truncate("hello world", 2) == ".."
+    assert truncate("hello world", 3) == "..."
+
+
 def test_truncate_negative_length_raises():
     with pytest.raises(ValueError):
         truncate("hello", -1)
