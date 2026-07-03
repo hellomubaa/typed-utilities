@@ -18,8 +18,8 @@ All functions use type hints and raise `ValueError` on invalid input
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/typed-utils.git
-cd typed-utils
+git clone https://github.com/hellomubaa/typed-utilities.git
+cd typed-utilities
 ```
 
 Create and activate a virtual environment:
@@ -51,6 +51,22 @@ Expected output:
 ```
 32 passed
 ```
+
+## Type checking
+
+The package is fully type-hinted. Run static type checking with `mypy`
+alongside the test suite:
+
+```bash
+# type check the package
+python -m mypy src
+
+# run tests
+python -m pytest -v
+```
+
+Both commands should pass with no errors. `mypy` configuration lives in
+`pyproject.toml` under `[tool.mypy]`.
 
 ## Example usage
 
