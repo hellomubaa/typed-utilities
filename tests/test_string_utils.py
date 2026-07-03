@@ -1,6 +1,12 @@
 import pytest
 
-from typed_utils.string_utils import is_palindrome, reverse, to_snake_case, truncate, word_count
+from typed_utils.string_utils import (
+    is_palindrome,
+    reverse,
+    to_snake_case,
+    truncate,
+    word_count,
+)
 
 
 def test_reverse_normal():
