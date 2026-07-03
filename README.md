@@ -142,7 +142,11 @@ shown by the badge at the top of this README.
 
 ### Pull request evidence
 
-- PR: https://github.com/hellomubaa/typed-utilities/pull/1
-  ("Fix README clone URL and add mypy type-checking") — merged after a green
-  CI run.
+All changes are merged into `master` through reviewed pull requests. See the
+full list here:
+
+- All pull requests: https://github.com/hellomubaa/typed-utilities/pulls?q=is%3Apr
 - CI runs: https://github.com/hellomubaa/typed-utilities/actions
+
+Each pull request is merged only after the **Python Tests** workflow
+(`ruff` + `mypy` + `pytest`) passes.
