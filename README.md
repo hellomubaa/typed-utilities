@@ -91,15 +91,28 @@ python -m black --check src tests
 Style configuration lives in `pyproject.toml` under `[tool.ruff]` and
 `[tool.black]`.
 
-## Full local check before every push
+## How to run quality gates locally
+
+These are the same gates enforced in CI. After activating your virtual
+environment and installing dependencies (`pip install -r requirements.txt`),
+run all four gates with one command:
 
 ```bash
-python -m ruff check src tests
-python -m ruff format --check src tests
-python -m black --check src tests
-python -m mypy --strict src
-python -m pytest -v
+python -m ruff check src tests && python -m ruff format --check src tests && python -m black --check src tests && python -m mypy --strict src && python -m pytest --cov
 ```
+
+Or run them individually:
+
+```bash
+python -m ruff check src tests        # lint
+python -m ruff format --check src tests  # formatting (ruff)
+python -m black --check src tests     # formatting (black)
+python -m mypy --strict src           # strict type checking
+python -m pytest --cov                # tests + coverage (fails under 80%)
+```
+
+All five commands must pass before pushing. Configuration for each tool lives
+in `pyproject.toml`.
 
 ## Example usage
 
