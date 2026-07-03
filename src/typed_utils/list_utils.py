@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from typing import TypeVar
 
 T = TypeVar("T")
@@ -34,7 +35,7 @@ def chunk(items: list[T], size: int) -> list[list[T]]:
     return [items[i : i + size] for i in range(0, len(items), size)]
 
 
-def find_first(items: list[T], predicate) -> T | None:
+def find_first(items: list[T], predicate: Callable[[T], bool]) -> T | None:
     """Return the first item matching predicate, or None if not found."""
     for item in items:
         if predicate(item):

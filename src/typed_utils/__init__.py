@@ -1,8 +1,8 @@
 """typed_utils: a small typed utility package for math, string, and list helpers."""
 
+from .list_utils import chunk, find_first, flatten, unique
 from .math_utils import add, average, clamp, divide, multiply, subtract
 from .string_utils import is_palindrome, reverse, to_snake_case, truncate, word_count
-from .list_utils import chunk, find_first, flatten, unique
 
 __all__ = [
     "add",
