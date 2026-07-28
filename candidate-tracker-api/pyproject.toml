@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "candidate-tracker-api"
+version = "0.1.0"
+description = "An in-memory FastAPI CRUD service for tracking job candidates."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.34",
+    "pydantic[email]>=2.10",
+]
+
+[project.optional-dependencies]
+dev = ["httpx>=0.28", "pytest>=8.3", "pytest-cov>=6.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "--cov=candidate_tracker --cov-report=term-missing --cov-fail-under=90"
+
+[tool.ruff]
+line-length = 88
+src = ["src", "tests"]
+
+[tool.black]
+line-length = 88
