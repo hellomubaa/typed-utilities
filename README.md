@@ -2,6 +2,70 @@
 
 [![Python Tests](https://github.com/hellomubaa/typed-utilities/actions/workflows/python-tests.yml/badge.svg)](https://github.com/hellomubaa/typed-utilities/actions/workflows/python-tests.yml)
 
+This repository contains two independent projects:
+
+| Project | Path | What it is |
+| ------- | ---- | ---------- |
+| **typed-utils** | repo root (`src/typed_utils`) | A small, typed Python utility package (math/string/list helpers). |
+| **Candidate Tracker API** | [`candidate-tracker-api/`](candidate-tracker-api/) | A tested **FastAPI** CRUD service with Pydantic validation (Week 2 · FastAPI & REST lab). |
+
+The CI workflow runs **both** projects: the `test` job covers `typed_utils`
+(ruff + black + mypy --strict + pytest) and the `candidate-tracker-api` job
+installs and pytest-tests the FastAPI service.
+
+---
+
+## Candidate Tracker API (FastAPI)
+
+A REST API for tracking job candidates through a hiring pipeline, with full CRUD,
+Pydantic request/response validation, meaningful HTTP status codes, and
+auto-generated Swagger docs at `/docs`. Storage is **in memory** (see limits below).
+
+Install and test it in one place:
+
+```bash
+cd candidate-tracker-api
+python -m venv .venv
+
+# Windows
+.venv\Scripts\activate
+# Linux/Mac
+source .venv/bin/activate
+
+pip install -r requirements.txt
+python -m pytest -v          # 31 tests, coverage-gated at 90%
+```
+
+Run the server locally:
+
+```bash
+uvicorn candidate_tracker.main:app --reload --app-dir src
+# Swagger UI: http://127.0.0.1:8000/docs
+```
+
+**Where to confirm the objectives directly:**
+
+- **Route definitions** — [`candidate-tracker-api/src/candidate_tracker/main.py`](candidate-tracker-api/src/candidate_tracker/main.py):
+  `GET /candidates` (list + `?status=` filter), `GET /candidates/{id}`,
+  `POST /candidates` (`201`), `PUT /candidates/{id}`, `DELETE /candidates/{id}` (`204`), `GET /health`.
+- **Request/response models & validation** — [`candidate-tracker-api/src/candidate_tracker/models.py`](candidate-tracker-api/src/candidate_tracker/models.py):
+  `EmailStr` email validation, regex phone validation (7–15 digits, `+` optional,
+  separators normalized), trimmed/non-blank `name` and `position`, and a
+  `CandidateStatus` enum. Invalid input returns `422` with a detailed body.
+- **In-memory storage** — [`candidate-tracker-api/src/candidate_tracker/storage.py`](candidate-tracker-api/src/candidate_tracker/storage.py):
+  a dict-backed store with auto-incrementing ids and email-uniqueness checks.
+  **Limits:** all data is lost on restart, it is single-process/not thread-safe,
+  and it is not intended for production use.
+- **Tests** — [`candidate-tracker-api/tests/`](candidate-tracker-api/tests/) cover
+  happy paths plus `404` (missing ids), `409` (duplicate email), `422`
+  (malformed email/phone/blank/missing fields), and end-to-end update/delete.
+
+Full details are in the project's own [README](candidate-tracker-api/README.md).
+
+---
+
+## typed-utils package
+
 A small, typed Python utility package with math, string, and list helper
 functions — built to demonstrate type hints, clean project structure,
 virtual environments, and pytest testing.
